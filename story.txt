@@ -1,0 +1,9 @@
+6/1/2012 1030hrs
+----------------
+
+* Turns out translate does not work for unicode strings beyond 128 [ascii]
+
+6/1/2012 1123hrs
+----------------
+
+* regex based substitution FTW
