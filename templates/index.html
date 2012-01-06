@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Zipf, FTW!</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Georgia;
+                color: #333;
+                font-size: 1.2em;
+            }
+
+            #wrapper {
+                width: 700px;
+                margin: 10px auto;
+                padding: 15px;
+                border: 1px solid #e0e0e0;
+                border-radius: 3px;
+            }
+
+            #url-box {
+                margin: 10px auto;
+                width: 400px;
+            }
+
+            #url-input {
+                display: block;
+                padding: 4px;
+                margin: 3px auto;
+                width: 100%;
+                border: 1px solid #e0e0e0;
+                font-size: 1.1em;
+            }
+
+            #submit-button {
+                display: block;
+                margin: 3px auto;
+                font-size: 1.1em;
+            }
+
+            #content {
+                margin: 10px auto;
+            }
+
+            #footer {
+                text-align: center;
+            }
+
+            #footer a {
+                color: #666;
+                text-decoration: none;
+            }
+
+            #footer a:hover {
+                color: #444;
+                border-bottom: 1px dotted;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="url-box">
+                <p>
+                    Enter a URL in the text box below.
+                </p>
+                    <input type="text" id="url-input" placeholder="http://example.com" name="url"/>
+                    <button id="submit-button">Submit</button>
+            </div>
+            <div id="content">
+            </div>
+            <div id='footer'>
+                An @<a href="https://twitter.com/okalotieno">okalotieno</a> project. Well, sort of :-)
+            </div>
+        </div>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/2.1.6/highcharts.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#submit-button').click(
+                    function() {
+                        $.ajax({
+                            url: '/',
+                            data: { url: $("#url-input").val() },
+                            type: 'POST',
+                            timeout: 10000,
+                            dataType: 'json',
+                            success: function(data) {
+                                var words = [];
+                                var frequencies = [];
+                                $.each(data, function(k,v) {
+                                    words.push(v[0]);
+                                    frequencies.push(v[1])
+                                })
+
+                                $('#content').css('height', (20*words.length))
+
+                                var chart = new Highcharts.Chart({
+                                    chart : {
+                                        renderTo: 'content',
+                                        defaultSeriesType: 'bar'
+                                    },
+
+                                    title : {
+                                        text : "Zipf profile of "+$("#url-input").val()
+                                    },
+
+                                    xAxis: {
+                                        categories: words,
+                                        labels: {
+                                            enabled: false,
+                                        }
+                                    },
+
+                                    yAxis: {
+                                        title: {
+                                            text : "Word Frequency",
+                                            align: 'high'
+                                        }
+                                    },
+
+                                    plotOptions: {
+                                        linewidth: 40,
+                                        bar: {
+                                            pointPadding : 0.1,
+                                            pointWidth: 15
+                                        }
+                                    },
+
+                                    legend: {
+                                        layout: 'vertical',
+                                        align: 'right',
+                                        x: -100,
+                                        y: 100,
+                                        floating: true,
+                                        borderWidth: 1,
+                                    },
+
+                                    series: [
+                                        { 
+                                            name: "Frequency",
+                                            data: frequencies,
+                                        }
+                                    ]
+                                })
+                            }
+                        })
+                    }
+                )
+            })
+        </script>
+    </body>
+</html>
