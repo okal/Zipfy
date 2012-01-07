@@ -1,9 +1,6 @@
 So, am I hired?
 ===============
 
-Fork, edit README and send a pull request. Or you could just call me. But I think my idea is way cooler :)
-Check it out here [zipf.ep.io](https://zipf.ep.io)
-
 Licensing
 =========
 
