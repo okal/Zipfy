@@ -11,7 +11,8 @@ try:
     from bundle_config import config
     r = redis.Redis(
         host = config['redis']['host'],
-        port = config['redis']['port'],
+        port = int(config['redis']['port']),
+        db = 0,
         password = config['redis']['password']
     )
 except:
