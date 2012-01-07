@@ -1,9 +1,9 @@
 Dependencies
 ============
 
-[Flask](http://flask.pocoo.org/)
-[requests](http://docs.python-requests.org/)
-[redis-py](https://github.com/andymccurdy/redis-py)
+[Flask](http://flask.pocoo.org/)  
+[requests](http://docs.python-requests.org/)  
+[redis-py](https://github.com/andymccurdy/redis-py)  
 
 Install [redis-server](http://redis.io) to enable caching.
 
