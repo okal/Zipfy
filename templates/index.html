@@ -77,13 +77,75 @@
         <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highcharts/2.1.6/highcharts.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
+                {% if zipf_profile %}
+
+                var zipf = {{ zipf_profile }}
+                var words = []
+                var frequencies = []
+                $.each(zipf, function(k, v) {
+                    words.push(v[0])
+                    frequencies(v[1])
+                })
+
+                $('#content').css('height', (20*words.length))
+
+                var chart = new Highcharts.Chart({
+                            chart : {
+                                    renderTo: 'content',
+                                    defaultSeriesType: 'bar'
+                            },
+
+                            title : {
+                                        text : "Zipf profile of "+$("#url-input").val()
+                            },
+
+                            xAxis: {
+                                        categories: words,
+                                        labels: {
+                                            enabled: false,
+                                        }
+                            },
+
+                            yAxis: {
+                                        title: {
+                                            text : "Word Frequency",
+                                            align: 'high'
+                                        }
+                            },
+
+                            plotOptions: {
+                                        linewidth: 40,
+                                        bar: {
+                                            pointPadding : 0.1,
+                                            pointWidth: 15
+                                        }
+                            },
+
+                            legend: {
+                                        layout: 'vertical',
+                                        align: 'right',
+                                        x: -100,
+                                        y: 100,
+                                        floating: true,
+                                        borderWidth: 1,
+                            },
+
+                            series: [
+                                        { 
+                                            name: "Frequency",
+                                            data: frequencies,
+                                        }
+                            ]
+                })
+                {% endif %}
+
                 $('#submit-button').click(
                     function() {
                         $.ajax({
                             url: '/',
                             data: { url: $("#url-input").val() },
                             type: 'POST',
-                            timeout: 10000,
+                            timeout: 20000,
                             dataType: 'json',
                             success: function(data) {
                                 var words = [];
