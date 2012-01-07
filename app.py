@@ -6,7 +6,7 @@ from zipfy import Corpus
 from json.encoder import JSONEncoder
 
 app = Flask(__name__)
-#app.debug = True
+app.debug = True
 try:
     from bundle_config import config
     r = redis.Redis(
