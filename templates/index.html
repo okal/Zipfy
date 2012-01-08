@@ -56,6 +56,17 @@
                 color: #444;
                 border-bottom: 1px dotted;
             }
+
+            #content .error {
+                background-color:#f8ff8f;
+                margin: 0 auto;
+                width: 200px;
+                border: 1px solid #ddd;
+                -webkit-border-radius: 2px;
+                -moz-border-radius: 2px;
+                border-radius: 2px;
+                padding: 3px;
+            }
         </style>
     </head>
     <body>
@@ -147,6 +158,13 @@
                             type: 'POST',
                             timeout: 20000,
                             dataType: 'json',
+
+                            statusCode: {
+                                404: function() {
+                                    $('#content').html('<p class="error">Datatype is not supported.</p>')
+                                }
+                            },
+
                             success: function(data) {
                                 var words = [];
                                 var frequencies = [];

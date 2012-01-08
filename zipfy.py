@@ -6,7 +6,7 @@ from HTMLParser import HTMLParser
 
 class Corpus:
     def __init__(self, words):
-        self.words = words
+        self.words = words.lower()
         self.word_list = self.words.split()
         self.word_set = set(self.word_list)
         self.freq_list = []
@@ -20,7 +20,12 @@ class Corpus:
 class WebCorpus(Corpus):
     def __init__(self, url):
         self.url = url
-        site = get(url)
+
+        try:
+            site = get(url)
+        except:
+            raise Exception, 'No such website'
+
         self.is_html = False
         self.is_plaintext = False
 
@@ -30,7 +35,7 @@ class WebCorpus(Corpus):
             page = BeautifulSoup(site.content, convertEntities=True)
             body = page.body
             text = ' '.join(body.findAll(text=True)).strip()
-            text = ' '.join(h.unescape(text).split()).lower()
+            text = ' '.join(h.unescape(text).split())
             self.words = re.sub('[^A-Za-z\'\s\-]+', '', text).__str__()
 
         elif 'text/plain' in site.headers['content-type']:
@@ -40,6 +45,6 @@ class WebCorpus(Corpus):
             self.words = re.sub('[^A-Za-z\'\s\-]+', '', text).__str__()
 
         else:
-            raise Exception('Unsupported data type')
+            raise Exception, 'Unsupported data type'
 
         Corpus.__init__(self, self.words)

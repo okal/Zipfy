@@ -29,8 +29,8 @@ def index():
             try:
                 corpus = WebCorpus(request.form['url'])
             except:
-                return "Hello, Post!" 
-        
+                abort(404) 
+
         e = JSONEncoder()
         zipf_profile = e.encode(corpus.freq_list)
         r.set(site_hash, zipf_profile)
