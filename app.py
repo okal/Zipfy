@@ -2,7 +2,7 @@ import redis
 
 from hashlib import sha1
 from flask import Flask, request, abort, render_template, make_response
-from zipfy import Corpus
+from zipfy import WebCorpus
 from json.encoder import JSONEncoder
 
 app = Flask(__name__)
@@ -27,7 +27,7 @@ def index():
             return zipf_profile
         else:
             try:
-                corpus = Corpus(request.form['url'])
+                corpus = WebCorpus(request.form['url'])
             except:
                 return "Hello, Post!" 
         
