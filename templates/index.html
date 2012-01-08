@@ -150,9 +150,11 @@
                             success: function(data) {
                                 var words = [];
                                 var frequencies = [];
+                                var frequency_logs = [];
                                 $.each(data, function(k,v) {
                                     words.push(v[0]);
                                     frequencies.push(v[1])
+                                    frequency_logs.push(Math.log(v[1]))
                                 })
 
                                 $('#content').css('height', (20*words.length))
@@ -186,9 +188,14 @@
 
                                     plotOptions: {
                                         linewidth: 40,
+
                                         bar: {
                                             pointPadding : 0.1,
                                             pointWidth: 15
+                                        },
+
+                                        series: {
+                                            stacking: 'normal'
                                         }
                                     },
 
@@ -205,6 +212,11 @@
                                         { 
                                             name: "Frequency",
                                             data: frequencies,
+                                        }, 
+
+                                        {
+                                            name: "Zipf Profile",
+                                            data: frequency_logs,
                                         }
                                     ]
                                 })
