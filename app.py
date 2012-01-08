@@ -34,6 +34,7 @@ def index():
         e = JSONEncoder()
         zipf_profile = e.encode(corpus.freq_list)
         r.set(site_hash, zipf_profile)
+        r.expire(site_hash, 120)
         resp = make_response(zipf_profile)
         return resp
     elif request.method == 'GET':
