@@ -39,12 +39,6 @@ def index():
         return resp
     elif request.method == 'GET':
         return render_template("index.html")
-
-#@app.route('/<site_hash>/')
-#def from_slug(site_hash):
-#    zipf_profile = r.get(site_hash)
-#    if zipf_profile:
-#        return render_template("index.html", zipf_profile=zipf_profile)
-    
+   
 if __name__ == "__main__":
     app.run()
